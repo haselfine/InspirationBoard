@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">InspirationBoard</string>
+    <string name="search_by_tag">Search by tag</string>
+    <string name="add_pet">Add Pet</string>
+    <string name="edit_pet">Edit Pet</string>
+    <string name="delete_pet">Delete Pet</string>
+    <string name="delete_pet_message">Delete %1$s?"</string>
+    <string name="pet_name">Name:\n%1$s</string>
+    <string name="pet_description">Description:\n%1$s</string>
+    <string name="pet_tags">Tags:\n%1$s</string>
+    <string name="edit_name_label">New name: </string>
+    <string name="edit_description_label">New description: </string>
+    <string name="edit_tags_label">New tags: </string>
+    <string name="edit_rating_label">New rating: </string>
+    <string name="name_hint">Enter pet name</string>
+    <string name="description_hint">Enter pet description</string>
+    <string name="tags_hint">Enter tags</string>
+    <string name="pet_image">Pet image</string>
+    <string name="save">Save</string>
+</resources>
