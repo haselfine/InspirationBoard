@@ -19,11 +19,12 @@ import android.widget.ImageButton;
  * A simple {@link Fragment} subclass.
  */
 public class ButtonFragment extends Fragment implements View.OnClickListener{
+    //I made the buttons their own fragment so I wouldn't have to depend on any other fragment and could move them around better
 
     private static final String TAG = "Button Fragment";
 
     public interface ButtonClickedListener{
-        void buttonClicked(View button);
+        void buttonClicked(View button); //sends to main where it uses a switch statement to read which button was pressed
     }
 
     private ButtonClickedListener mButtonClickedListener;
@@ -72,5 +73,5 @@ public class ButtonFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View button){
         mButtonClickedListener.buttonClicked(button);
-    }
+    } //read above note
 }

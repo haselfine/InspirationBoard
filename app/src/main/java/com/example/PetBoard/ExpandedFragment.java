@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExpandedFragment extends Fragment {
+public class ExpandedFragment extends Fragment { //this is so the user can see things a lot larger. Almost exact same as detail fragment (so comments will be there)
 
     TextView mName;
     TextView mDescription;

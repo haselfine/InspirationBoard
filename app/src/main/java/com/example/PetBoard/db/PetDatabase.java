@@ -19,7 +19,7 @@ public abstract class PetDatabase extends RoomDatabase {
 
     public abstract PetDAO petDAO();
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) { //I originally didn't have the date column, so I needed to add that in a migration
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE Pet ADD COLUMN date INTEGER");

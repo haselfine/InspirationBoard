@@ -42,9 +42,9 @@ public class PetListFragment extends Fragment implements PetListListener{
     private PetViewModel mPetViewModel;
     private List<Pet> mPets;
 
-    private static final String TAG = "WISH_LIST_FRAGMENT";
+    private static final String TAG = "LIST_FRAGMENT";
 
-    private List<Pet> petSearch = new ArrayList<>();
+    private Observer<List<Pet>> mPetListObserver;
 
     private PetListAdapter petListAdapter;
 
@@ -61,15 +61,16 @@ public class PetListFragment extends Fragment implements PetListListener{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        displayResults();
+        displayResults(); //loads from observer/viewmodel
     }
 
     private void displayResults() {
-        final PetViewModel petViewModel = ViewModelProviders.of(this).get(PetViewModel.class);
+        mPetViewModel = ViewModelProviders.of(this).get(PetViewModel.class);
 
-        final Observer<List<Pet>> petListObserver = new Observer<List<Pet>>() {
+        mPetListObserver = new Observer<List<Pet>>() {
             @Override
-            public void onChanged(List<Pet> pets) {
+            public void onChanged(List<Pet> pets) { //this is kind of a frankenstein monster from other labs. I have both a local list which is sorted
+                                                    //as well as the database... Pretty sure the local isn't necessary, but I haven't checked yet
                 Log.d(TAG, "Pets changed: " + pets);
                 Collections.sort(pets);
                 PetListFragment.this.mPets = pets;
@@ -78,7 +79,14 @@ public class PetListFragment extends Fragment implements PetListListener{
             }
         };
 
-        petViewModel.getAllPets().observe(this, petListObserver);
+        mPetViewModel.getAllPets().observe(this, mPetListObserver);
+    }
+
+    private void displayResults(CharSequence s) { //this is what I came up with when trying to use the search bar. Does not work.
+
+        mPetListObserver.onChanged(mPets);
+
+        mPetViewModel.getPetByTag(s).observe(this, mPetListObserver);
     }
 
     @Override
@@ -111,8 +119,11 @@ public class PetListFragment extends Fragment implements PetListListener{
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
+            public void afterTextChanged(Editable s) { //this is all I could come up with for my search function
+                /*if(s.toString().equals("")){
+                    displayResults();
+                }
+                displayResults(s);*/
             }
         });
 
@@ -125,7 +136,7 @@ public class PetListFragment extends Fragment implements PetListListener{
         Log.d(TAG, "onAttach");
         super.onAttach(context);
 
-        if(context instanceof PetClickedListener){
+        if(context instanceof PetClickedListener){ //attach listener
             mPetClickedListener = (PetClickedListener) context;
             Log.d(TAG, "On attach configured listener " + mPetClickedListener);
         } else {
@@ -142,11 +153,11 @@ public class PetListFragment extends Fragment implements PetListListener{
     @Override
     public void onListClick(int position){
         Pet pet = mPets.get(position);
-        mPetClickedListener.petClicked(pet);
+        mPetClickedListener.petClicked(pet); //sends pet clicked to main which sends to the detail fragment to display
     }
 
     @Override
-    public void onListLongClick(final int position){
+    public void onListLongClick(final int position){ //sends to delete popup
         final Pet pet = mPets.get(position);
 
         if(getActivity() == null){
@@ -155,7 +166,8 @@ public class PetListFragment extends Fragment implements PetListListener{
         deletePet(pet);
     }
 
-    public void deletePet(final Pet pet){
+    public void deletePet(final Pet pet){ //delete pop up
+        //I could add the check if the list is empty here to display the default pet, but I don't have time
 
         AlertDialog confirmDeleteDialog = new AlertDialog.Builder(getActivity())
                 .setMessage(getString(R.string.delete_pet_message, pet.getName()))
@@ -163,8 +175,8 @@ public class PetListFragment extends Fragment implements PetListListener{
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mPetViewModel.delete(pet);
-                        petListAdapter.notifyItemRemoved(mPets.indexOf(pet));
+                        mPetViewModel.delete(pet); //informs viewmodel of delete
+                        petListAdapter.notifyItemRemoved(mPets.indexOf(pet)); //informs adapter of delete
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -172,19 +184,19 @@ public class PetListFragment extends Fragment implements PetListListener{
         confirmDeleteDialog.show();
     }
 
-    public void updateList(Pet pet) {
-        if(mPets.contains(pet)){
-            int petIndex = mPets.indexOf(pet);
-            mPets.remove(pet);
-            mPetViewModel.update(pet);
-            petListAdapter.notifyItemRemoved(petIndex);
+    public void updateList(Pet pet) { //another frankenstein monster of local lists and database list
+        if(mPets.contains(pet)){ //checks local list (to differentiate from an edited item and an added item)
+            int petIndex = mPets.indexOf(pet); //index to inform adapter
+            mPets.remove(pet); //removes from local list
+            mPetViewModel.update(pet); //updates the database entry
+            petListAdapter.notifyItemRemoved(petIndex); //deletes pet from recycler view
 
-            mPets.add(pet);
-            petListAdapter.notifyItemInserted(mPets.size()-1);
-        } else {
-            mPets.add(pet);
-            mPetViewModel.insert(pet);
-            petListAdapter.notifyItemInserted(mPets.size()-1);
+            mPets.add(pet); //adds the pet back to local list with new information
+            petListAdapter.notifyItemInserted(mPets.size()-1); //adds pet back to adapter/recyclerview
+        } else { //if we're adding a new pet
+            mPets.add(pet); //just add to local list
+            mPetViewModel.insert(pet); //add to view model/database
+            petListAdapter.notifyItemInserted(mPets.size()-1); //add to recyclerview
         }
     }
 }

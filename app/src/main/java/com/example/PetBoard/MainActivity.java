@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements
         PetDetailFragment.ExpandButtonListener{
 
 
-    Pet mPet;
+    Pet mPet; //variable for knowing which pet is selected, pass to different fragments
 
     private static final String TAG = "MAIN_ACTIVITY";
 
@@ -74,31 +74,32 @@ public class MainActivity extends AppCompatActivity implements
         boolean edit;
         switch (buttonID){
             case R.id.add_button:
-                edit = false;
+                edit = false; //this variable lets the method know which way to load the edit fragment. In this case, it's adding so edit is false.
                 callEditFragment(edit);
                 break;
             case R.id.delete_button:
-                petToDelete(mPet);
+                petToDelete(mPet); //sends to list fragment for delete popup
 
                 FragmentManager fm = getSupportFragmentManager();
                 PetDetailFragment detailFragment = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
-                mPet = detailFragment.defaultPet();
-                detailFragment.setPet(mPet);
+                mPet = detailFragment.defaultPet(); //just in case pet list is empty, sets to a default pet, to avoid seeing format strings
+                                                    //there's a better way to do this that checks if the list is empty, but I don't have enough time to write that right now
+                detailFragment.setPet(mPet); //set to default pet
 
                 break;
             case R.id.edit_button:
-                edit = true;
+                edit = true; //we are editing, so edit is true
                 callEditFragment(edit);
                 break;
         }
     }
 
-    public void petToDelete(Pet pet){
+    public void petToDelete(Pet pet){ //sends to list fragment since that's where I wrote it first, and that's where the database connection is
         FragmentManager fm = getSupportFragmentManager();
         PetListFragment petListFragment = (PetListFragment) fm.findFragmentByTag(TAG_LIST);
         try{
             petListFragment.deletePet(pet);
-        } catch (NullPointerException npe){
+        } catch (NullPointerException npe){ //just in case there's no pet to delete
             Toast.makeText(this, "Pet does not exist", Toast.LENGTH_LONG).show();
         }
     }
@@ -109,19 +110,19 @@ public class MainActivity extends AppCompatActivity implements
         FragmentTransaction ft = fm.beginTransaction();
         try {
             PetDetailFragment detail = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
-            mPet = detail.getCurrentPet();
-        } catch (NullPointerException npe){
+            mPet = detail.getCurrentPet(); //if we're editing, it will be the pet that is currently selected in detail screen
+        } catch (NullPointerException npe){ //catch nulls
             Log.d(TAG, "No current pet.");
         }
-        if(edit){
+        if(edit){ //sent from switch statement. If editing, it creates a new instance with the pet details already there
             EditPetFragment editPetFragment = EditPetFragment.newInstance(mPet);
             ft.replace(android.R.id.content, editPetFragment,TAG_EDIT);
-        } else {
+        } else { //not editing, fields are blank
             EditPetFragment editPetFragment = EditPetFragment.newInstance();
             ft.replace(android.R.id.content, editPetFragment,TAG_EDIT);
         }
 
-        ft.addToBackStack(TAG_EDIT);
+        ft.addToBackStack(TAG_EDIT); //allow back button
 
         ft.commit();
     }
@@ -130,18 +131,18 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void petClicked (Pet pet){
-        try {
+        try { //sends pet from list fragment
             FragmentManager fm = getSupportFragmentManager();
             PetDetailFragment detailFragment = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
-            mPet = pet;
-            detailFragment.setPet(mPet);
+            mPet = pet; //makes that the global variable for other uses
+            detailFragment.setPet(mPet); //sets the details for that pet in detail fragment
         } catch (NullPointerException npe){
             mPet = pet;
         }
     }
 
     @Override
-    public void saveChanges(Pet pet){
+    public void saveChanges(Pet pet){ //on save from edit fragment, sends the pet to list fragment for database storage and to update the list on screen
         FragmentManager fm = getSupportFragmentManager();
         PetListFragment petListFragment = (PetListFragment) fm.findFragmentByTag(TAG_LIST);
         petListFragment.updateList(pet);
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements
         FragmentTransaction ft = fm.beginTransaction();
         EditPetFragment editPetFragment = (EditPetFragment) fm.findFragmentByTag(TAG_EDIT);
         if (editPetFragment != null){
-            ft.remove(editPetFragment);
+            ft.remove(editPetFragment); //close edit fragment
         }
 
         ft.commit();
@@ -162,8 +163,8 @@ public class MainActivity extends AppCompatActivity implements
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        mPet = pet;
-        ExpandedFragment expandedFragment = ExpandedFragment.newInstance(mPet);
+        mPet = pet; //gets currently selected pet
+        ExpandedFragment expandedFragment = ExpandedFragment.newInstance(mPet); //shows details for that pet in expanded fragment
 
         ft.add(android.R.id.content, expandedFragment, TAG_EXPAND);
 

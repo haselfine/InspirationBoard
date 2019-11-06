@@ -20,7 +20,7 @@ public class PetRepository {
         return petDAO.getAllPets();
     }
 
-    public LiveData<List<Pet>> getPetByTag(String tags){
+    public LiveData<List<Pet>> getPetByTag(String tags){ //I couldn't get this to work
         return petDAO.getPetsByTag(tags);
     }
 

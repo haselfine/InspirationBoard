@@ -27,8 +27,8 @@ import java.util.Date;
 public class EditPetFragment extends Fragment implements View.OnClickListener {
 
     interface SaveChangesListener{
-        void saveChanges(Pet pet);
-        void takePicture(View button);
+        void saveChanges(Pet pet); //saves edit/added pet. sends to main, which sends to the list fragment
+        void takePicture(View button); //this sends to main which handles the picture taking process
     }
 
     private static final String TAG = "EDIT FRAGMENT";
@@ -50,12 +50,12 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    public static EditPetFragment newInstance(){
+    public static EditPetFragment newInstance(){ //this one is for adding a pet
         EditPetFragment editPetFragment = new EditPetFragment();
         return editPetFragment;
     }
 
-    public static EditPetFragment newInstance(Pet pet){
+    public static EditPetFragment newInstance(Pet pet){ //this one is for editing a pet, sends pet in bundle
         final Bundle args = new Bundle();
         args.putParcelable(ARGS_EDIT, pet);
         EditPetFragment editPetFragment = new EditPetFragment();
@@ -64,7 +64,7 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onStart(){
+    public void onStart(){ //i originally had something in here and removed it. I kept this part just in case I need to add something later
         super.onStart();
 
 
@@ -99,7 +99,7 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
         mEditPetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSaveChangesListener.takePicture(mEditPetImage);
+                mSaveChangesListener.takePicture(mEditPetImage); //sends to main with button id so it can be loaded later
             }
         });
 
@@ -121,29 +121,30 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View button){
-        if(mEditName.toString().equals("")
+        if(mEditName.toString().equals("") //check to make sure edit texts aren't empty
             || mEditDescription.toString().equals("")
             || mEditTags.toString().equals("")){
             Toast.makeText(EditPetFragment.this.getContext(), "Pet must have a name, description, and tags", Toast.LENGTH_LONG).show();
         }
-        mPet.setName(mEditName.getText().toString());
-        mPet.setDescription(mEditDescription.getText().toString());
-        mPet.setTags(mEditTags.getText().toString());
-        mPet.setRating(Double.valueOf(mEditRatingBar.getRating()));
-        Date date = new Date();
-        mPet.setDate(date);
-        mSaveChangesListener.saveChanges(mPet);
+        mPet.setName(mEditName.getText().toString()); //sets name to what is in the field
+        mPet.setDescription(mEditDescription.getText().toString()); //sets description like name
+        mPet.setTags(mEditTags.getText().toString()); //same as above
+        mPet.setRating(Double.valueOf(mEditRatingBar.getRating())); //reads rating bar. Needs to convert to double because that was
+                                                                //the original data type I had and I didn't want to do another migration
+        Date date = new Date(); //gets current date/time
+        mPet.setDate(date); //sets to variable
+        mSaveChangesListener.saveChanges(mPet); //sends info to main to send to list to save to list and database
     }
 
     private void setCurrentAttributes(Pet pet) {
-        mEditName.setText(pet.getName());
+        mEditName.setText(pet.getName()); //if editing, sets the fields to their current attributes
         mEditDescription.setText(pet.getDescription());
         mEditTags.setText(pet.getTags());
         mEditRatingBar.setRating(pet.getRating().floatValue());
         loadImage();
     }
 
-    public void setImageFilePath(String filePath){
+    public void setImageFilePath(String filePath){ //this is used in main to retrieve/set the filepath to the pet that's being edited/added
         mPet.setPhotoPath(filePath);
         loadImage();
     }

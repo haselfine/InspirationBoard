@@ -12,7 +12,7 @@ import androidx.room.TypeConverters;
 import java.util.Date;
 
 @Entity
-public class Pet implements Comparable<Pet>, Parcelable {
+public class Pet implements Comparable<Pet>, Parcelable { //can be sorted as well as packaged
 
 
     @NonNull
@@ -22,13 +22,13 @@ public class Pet implements Comparable<Pet>, Parcelable {
     private String description;
     private String tags;
     private Double rating;
-    private String photoPath;
+    private String photoPath; //uses string for photopath to store in database, rather than BLOB
     private Date date;
 
     public Pet(){}
 
     @Ignore
-    public Pet(String name, String description, String tags, Double rating, String photoPath){
+    public Pet(String name, String description, String tags, Double rating, String photoPath){ //constructor does not have date, that is added later
         this.name = name;
         this.description = description;
         this.tags = tags;
@@ -95,9 +95,9 @@ public class Pet implements Comparable<Pet>, Parcelable {
 
     public int describeContents(){
         return 0;
-    }
+    } //for parcel
 
-    protected Pet(Parcel in){
+    protected Pet(Parcel in){ //parcel doesn't contain date as it isn't defined here and can't be packaged as is
         name = in.readString();
         description = in.readString();
         tags = in.readString();
@@ -105,7 +105,7 @@ public class Pet implements Comparable<Pet>, Parcelable {
         photoPath = in.readString();
     }
 
-    public static final Creator<Pet> CREATOR = new Creator<Pet>() {
+    public static final Creator<Pet> CREATOR = new Creator<Pet>() { //for creating from parcel
         @Override
         public Pet createFromParcel(Parcel in) {
             return new Pet(in);
@@ -118,7 +118,7 @@ public class Pet implements Comparable<Pet>, Parcelable {
     };
 
     @Override
-    public void writeToParcel(Parcel dest, int flags){
+    public void writeToParcel(Parcel dest, int flags){ //save to parcel
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(tags);
@@ -129,10 +129,10 @@ public class Pet implements Comparable<Pet>, Parcelable {
 
     public int compareTo(Pet pet){
         return this.date.compareTo(pet.date);
-    }
+    } //compares by date
 
     @Override
-    public String toString(){
+    public String toString(){ //for database
         return "Pet{" +
                 "id=" + id +
                 ", name=" + name +

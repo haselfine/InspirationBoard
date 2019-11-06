@@ -64,18 +64,17 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
 
         mPetViewModel = ViewModelProviders.of(this).get(PetViewModel.class);
 
-        mPet = defaultPet();
-
         final Observer<List<Pet>> petListObserver = new Observer<List<Pet>>() {
             @Override
             public void onChanged(List<Pet> pets) {
                 Collections.sort(pets);
                 PetDetailFragment.this.mPets = pets;
-                if(mPets.size() > 0){
-                    mPet = mPets.get(0);
+                if(mPets.size() > 0){ //checks to make sure list isn't empty
+                    mPet = mPets.get(0); //gets first pet in list
                     setAttributes(mPet);
                 } else {
-                    mPet = defaultPet();
+                    mPet = defaultPet(); //if list is empty, sets to default pet
+                    setAttributes(mPet);
                 }
             }
         };
@@ -109,20 +108,20 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
         mRating = view.findViewById(R.id.pet_ratingBar);
         mImage = view.findViewById(R.id.pet_imageButton);
         mExpandButton = view.findViewById(R.id.expand_button);
-        mExpandButton.setOnClickListener(this);
+        mExpandButton.setOnClickListener(this); //click listener is below
 
         if(mPet == null){
-            mPet = defaultPet();
+            mPet = defaultPet(); //if there's no pet, sets to default pet (this might be redundant)
         }
         setPet(mPet);
         return view;
     }
     @Override
     public void onClick(View v) {
-        mExpandButtonListener.expand(mPet);
+        mExpandButtonListener.expand(mPet); //sends information to expanded details fragment
     }
 
-    public Pet defaultPet(){
+    public Pet defaultPet(){ //default schema for a pet
         Pet pet = new Pet();
         pet.setName("Fluffy");
         pet.setDescription("Very fluffy");
@@ -132,27 +131,31 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
     }
 
     public void setPet(Pet pet){
-        this.mPet = pet;
+        this.mPet = pet; //just in case this is sent from outside of this fragment
         setAttributes(mPet);
     }
 
-    public void setAttributes(Pet pet) {
+    public void setAttributes(Pet pet) { //loads information from pet object into fields
         if(pet == null){
             pet = defaultPet();
         }
         mName.setText(getString(R.string.pet_name,  pet.getName()));
         mDescription.setText(getString(R.string.pet_description, pet.getDescription()));
         mTags.setText(getString(R.string.pet_tags, pet.getTags()));
-        if(pet.getPhotoPath() == null){
+        if(pet.getPhotoPath() == null){ //if there's no photopath, sets picture to default
             mImage.setImageResource(android.R.drawable.ic_menu_camera);
         } else {
             loadImage();
         }
-        mRating.setRating(pet.getRating().floatValue());
+        mRating.setRating(pet.getRating().floatValue()); //needs float value method since I originally made the
+                                                // rating a double and didn't want to migrate to a new database
     }
 
     public Pet getCurrentPet(){
-        return mPet;
+        if(mPet == null){ //if no pet, sets to default
+            mPet = defaultPet();
+        }
+        return mPet; //otherwise returns currently selected pet
     }
 
     public void loadImage() {

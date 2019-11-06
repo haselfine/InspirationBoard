@@ -29,7 +29,7 @@ public class PetViewModel extends AndroidViewModel {
         return mAllPets;
     }
 
-    public LiveData<List<Pet>> getPetByTag(CharSequence s){
+    public LiveData<List<Pet>> getPetByTag(CharSequence s){ //this was for the search function but it doesn't work
         StringBuilder sb = new StringBuilder();
         sb.append("%").append(s.toString()).append("%");
         mTags = sb.toString();

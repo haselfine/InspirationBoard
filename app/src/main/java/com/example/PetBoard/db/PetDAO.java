@@ -15,7 +15,7 @@ public interface PetDAO {
     @Query("SELECT * FROM pet ORDER BY UPPER(name) DESC")
     LiveData<List<Pet>> getAllPets();
 
-    @Query("SELECT * FROM pet WHERE tags LIKE :tags")
+    @Query("SELECT * FROM pet WHERE name || tags || description LIKE :tags") //I couldn't get this part to work
     LiveData<List<Pet>> getPetsByTag(String tags);
 
     @Insert
@@ -28,7 +28,7 @@ public interface PetDAO {
     void update(Pet pet);
 
     @Update
-    void update(Pet... pets);
+    void update(Pet... pets); //allows update to all rows
 
     @Delete
     void delete(Pet pet);

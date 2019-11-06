@@ -273,7 +273,7 @@ public final class PetDAO_Impl implements PetDAO {
 
   @Override
   public LiveData<List<Pet>> getPetsByTag(final String tags) {
-    final String _sql = "SELECT * FROM pet WHERE tags LIKE ?";
+    final String _sql = "SELECT * FROM pet WHERE name || tags || description LIKE ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     if (tags == null) {
