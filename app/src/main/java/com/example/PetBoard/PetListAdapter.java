@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +14,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.PetBoard.db.Pet;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListViewHolder> {
@@ -106,9 +110,35 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListV
                 tagTextView.setText(pet.getTags());
                 dateTextView.setText(pet.getDate().toString());
                 photoPath = pet.getPhotoPath();
+                loadImage(pet);
+            }
+        }
+        public void loadImage(Pet pet) {
+
+            ImageView imageView = petImageView; //use index of image button
+            String path = pet.getPhotoPath(); //retrieve index of image button to find file
+
+            if (path != null && !path.isEmpty()){ //check if empty
+                Picasso.get() //use picasso to load file into image button
+                        .load(new File(path))
+                        .error(android.R.drawable.stat_notify_error)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView, new Callback(){
+                            @Override
+                            public void onSuccess(){
+                                Log.d(TAG, "Image loaded");
+                            }
+                            @Override
+                            public void onError(Exception e){
+                                Log.e(TAG, "error loading image", e);
+                            }
+                        });
             }
         }
     }
+
+
 
     public Pet getFirstPet(){
         return mPets.get(0);

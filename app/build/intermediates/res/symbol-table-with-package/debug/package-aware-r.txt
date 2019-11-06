@@ -736,6 +736,12 @@ id edit_query
 id end
 id end_padder
 id expand_activities_button
+id expand_button
+id expand_name_detail_TextView
+id expand_pet_description_textView
+id expand_pet_imageButton
+id expand_pet_ratingBar
+id expand_tags_detail_textView
 id expanded_menu
 id fill
 id fill_horizontal
@@ -890,6 +896,7 @@ layout abc_tooltip
 layout activity_main
 layout fragment_button
 layout fragment_edit_pet
+layout fragment_expanded
 layout fragment_pet_detail
 layout fragment_pet_list
 layout notification_action
@@ -961,6 +968,7 @@ string edit_name_label
 string edit_pet
 string edit_rating_label
 string edit_tags_label
+string hello_blank_fragment
 string name_hint
 string pet_description
 string pet_image

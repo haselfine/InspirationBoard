@@ -30,7 +30,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements
         PetListFragment.PetClickedListener,
         ButtonFragment.ButtonClickedListener,
-        EditPetFragment.SaveChangesListener{
+        EditPetFragment.SaveChangesListener,
+        PetDetailFragment.ExpandButtonListener{
 
 
     Pet mPet;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final String TAG_BUTTON = "ButtonFragment";
     private static final String TAG_DETAIL = "DetailFragment";
     private static final String TAG_EDIT = "EditFragment";
+    private static final String TAG_EXPAND = "ExpandedFragment";
 
     private String mCurrentImagePath;
 
@@ -153,6 +155,21 @@ public class MainActivity extends AppCompatActivity implements
         ft.commit();
 
 
+    }
+
+    @Override
+    public void expand(Pet pet){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        mPet = pet;
+        ExpandedFragment expandedFragment = ExpandedFragment.newInstance(mPet);
+
+        ft.add(android.R.id.content, expandedFragment, TAG_EXPAND);
+
+        ft.addToBackStack(TAG_EXPAND);
+
+        ft.commit();
     }
 
     @Override

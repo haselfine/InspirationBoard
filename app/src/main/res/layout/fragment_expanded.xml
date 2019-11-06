@@ -6,17 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pet_list_background"
-    tools:context=".PetDetailFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".ExpandedFragment">
 
     <ImageButton
-        android:id="@+id/pet_imageButton"
-        android:layout_width="187dp"
-        android:layout_height="158dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:id="@+id/expand_pet_imageButton"
+        android:layout_width="339dp"
+        android:layout_height="349dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:clickable="false"
         android:contentDescription="@string/pet_image"
         android:padding="16dp"
@@ -25,10 +23,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/pet_ratingBar"
+        android:id="@+id/expand_pet_ratingBar"
         android:layout_width="241dp"
         android:layout_height="48dp"
-        android:layout_marginTop="268dp"
         android:clickable="false"
         android:isIndicator="true"
         android:isScrollContainer="false"
@@ -37,54 +34,41 @@
         android:stepSize=".5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tags_detail_textView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/expand_tags_detail_textView"
+        app:layout_constraintTop_toTopOf="@+id/expand_tags_detail_textView" />
 
     <TextView
-        android:id="@+id/tags_detail_textView"
+        android:id="@+id/expand_tags_detail_textView"
         android:layout_width="106dp"
         android:layout_height="36dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="636dp"
         android:text="@string/pet_tags"
-        app:layout_constraintEnd_toStartOf="@+id/pet_ratingBar"
+        app:layout_constraintEnd_toStartOf="@+id/expand_pet_ratingBar"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/name_detail_TextView"
-        android:layout_width="77dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="56dp"
+        android:id="@+id/expand_name_detail_TextView"
+        android:layout_width="75dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
         android:text="@string/pet_name"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/pet_imageButton"
-        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/pet_description_textView"
-        android:layout_width="319dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="180dp"
+        android:id="@+id/expand_pet_description_textView"
+        android:layout_width="318dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="492dp"
         android:text="@string/pet_description"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/expand_button"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/expand_button"
-        android:layout_width="56dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="188dp"
-        android:background="@color/colorAccent"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintEnd_toStartOf="@+id/pet_description_textView"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

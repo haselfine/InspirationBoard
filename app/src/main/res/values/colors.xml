@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#916E33</color>
     <color name="colorPrimaryDark">#756441</color>
-    <color name="colorAccent">#FFE000</color>
+    <color name="colorAccent">#76C18C</color>
     <color name="pet_list_background">#997F50</color>
     <color name="pet_list_item_background">#DFC8FF00</color>
     <color name="pet_detail_background">#A1C7AD78</color>

@@ -1,10 +1,8 @@
 package com.example.PetBoard;
 
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,20 +27,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PetDetailFragment extends Fragment implements View.OnClickListener {
-
-    interface ExpandButtonListener{
-        void expand(Pet pet);
-    }
-
-    private ExpandButtonListener mExpandButtonListener;
+public class ExpandedFragment extends Fragment {
 
     TextView mName;
     TextView mDescription;
     TextView mTags;
     RatingBar mRating;
     ImageButton mImage;
-    ImageButton mExpandButton;
     String mFilePath;
 
     Pet mPet;
@@ -50,76 +41,62 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
     private PetViewModel mPetViewModel;
     private List<Pet> mPets;
 
-    private static final String TAG = "PET_DETAIL_FRAGMENT";
+    private static final String TAG = "EXPAND_FRAGMENT";
+    private static final String ARGS_EXPAND = "Expand arguments";
 
 
-    public static PetDetailFragment newInstance(){
-        PetDetailFragment fragment = new PetDetailFragment();
+    public static ExpandedFragment newInstance(){
+        ExpandedFragment fragment = new ExpandedFragment();
+        return fragment;
+    }
+
+    public static ExpandedFragment newInstance(Pet pet){
+        final Bundle args = new Bundle();
+        args.putParcelable(ARGS_EXPAND, pet);
+        ExpandedFragment fragment = new ExpandedFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        mPetViewModel = ViewModelProviders.of(this).get(PetViewModel.class);
-
-        mPet = defaultPet();
-
-        final Observer<List<Pet>> petListObserver = new Observer<List<Pet>>() {
-            @Override
-            public void onChanged(List<Pet> pets) {
-                Collections.sort(pets);
-                PetDetailFragment.this.mPets = pets;
-                if(mPets.size() > 0){
-                    mPet = mPets.get(0);
-                    setAttributes(mPet);
-                } else {
-                    mPet = defaultPet();
-                }
-            }
-        };
-
-
-        mPetViewModel.getAllPets().observe(this, petListObserver);
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
+    public void onStart(){
+        super.onStart();
 
-        Log.d(TAG, "onAttach");
-
-        if (context instanceof ExpandButtonListener) { //attaches listener
-            mExpandButtonListener = (ExpandButtonListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement ExpandButtonListener");
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_pet_detail, container, false);
-        
-        mName = view.findViewById(R.id.name_detail_TextView);
-        mDescription = view.findViewById(R.id.pet_description_textView);
-        mTags = view.findViewById(R.id.tags_detail_textView);
-        mRating = view.findViewById(R.id.pet_ratingBar);
-        mImage = view.findViewById(R.id.pet_imageButton);
-        mExpandButton = view.findViewById(R.id.expand_button);
-        mExpandButton.setOnClickListener(this);
+        View view = inflater.inflate(R.layout.fragment_expanded, container, false);
+
+        mName = view.findViewById(R.id.expand_name_detail_TextView);
+        mDescription = view.findViewById(R.id.expand_pet_description_textView);
+        mTags = view.findViewById(R.id.expand_tags_detail_textView);
+        mRating = view.findViewById(R.id.expand_pet_ratingBar);
+        mImage = view.findViewById(R.id.expand_pet_imageButton);
+
+        if(getArguments() != null && getArguments().getParcelable(ARGS_EXPAND)!=null){ //as long as arguments/bundle have information...
+
+            mPet = getArguments().getParcelable(ARGS_EXPAND);
+
+            setPet(mPet);
+
+        } else {
+            Log.d(TAG, "Did not receive pet.");
+            mPet = new Pet();
+        }
 
         if(mPet == null){
             mPet = defaultPet();
         }
         setPet(mPet);
         return view;
-    }
-    @Override
-    public void onClick(View v) {
-        mExpandButtonListener.expand(mPet);
     }
 
     public Pet defaultPet(){
@@ -143,11 +120,7 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
         mName.setText(getString(R.string.pet_name,  pet.getName()));
         mDescription.setText(getString(R.string.pet_description, pet.getDescription()));
         mTags.setText(getString(R.string.pet_tags, pet.getTags()));
-        if(pet.getPhotoPath() == null){
-            mImage.setImageResource(android.R.drawable.ic_menu_camera);
-        } else {
-            loadImage();
-        }
+        loadImage();
         mRating.setRating(pet.getRating().floatValue());
     }
 
