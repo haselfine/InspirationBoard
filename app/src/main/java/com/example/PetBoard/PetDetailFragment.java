@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.PetBoard.db.Pet;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +34,7 @@ public class PetDetailFragment extends Fragment {
     TextView mTags;
     RatingBar mRating;
     ImageButton mImage;
+    String mFilePath;
 
     Pet mPet;
 
@@ -118,10 +123,35 @@ public class PetDetailFragment extends Fragment {
         mName.setText(getString(R.string.pet_name,  pet.getName()));
         mDescription.setText(getString(R.string.pet_description, pet.getDescription()));
         mTags.setText(getString(R.string.pet_tags, pet.getTags()));
+        loadImage();
         mRating.setRating(pet.getRating().floatValue());
     }
 
     public Pet getCurrentPet(){
         return mPet;
+    }
+
+    public void loadImage() {
+
+        ImageButton imageButton = mImage; //use index of image button
+        String path = mPet.getPhotoPath(); //retrieve index of image button to find file
+
+        if (path != null && !path.isEmpty()){ //check if empty
+            Picasso.get() //use picasso to load file into image button
+                    .load(new File(path))
+                    .error(android.R.drawable.stat_notify_error)
+                    .fit()
+                    .centerCrop()
+                    .into(imageButton, new Callback(){
+                        @Override
+                        public void onSuccess(){
+                            Log.d(TAG, "Image loaded");
+                        }
+                        @Override
+                        public void onError(Exception e){
+                            Log.e(TAG, "error loading image", e);
+                        }
+                    });
+        }
     }
 }

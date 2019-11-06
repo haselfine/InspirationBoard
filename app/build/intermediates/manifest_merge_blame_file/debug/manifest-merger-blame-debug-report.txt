@@ -10,56 +10,86 @@
 9        android:targetSdkVersion="29" />
 9-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml
 10
-11    <application
-11-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:5:5-19:19
-12        android:allowBackup="true"
-12-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:6:9-35
-13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-13-->[androidx.core:core:1.0.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\72b2b92ec4ab73ff21fb9bc348de3b22\core-1.0.1\AndroidManifest.xml:22:18-86
-14        android:debuggable="true"
-15        android:icon="@drawable/icons8_cat_butt_96"
-15-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:7:9-52
-16        android:label="@string/app_name"
-16-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:8:9-41
-17        android:roundIcon="@drawable/icons8_cat_butt_96"
-17-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:9:9-57
-18        android:supportsRtl="true"
-18-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:10:9-35
-19        android:testOnly="true"
-20        android:theme="@style/AppTheme" >
-20-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:11:9-40
-21        <activity android:name="com.example.PetBoard.MainActivity" >
-21-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:12:9-18:20
-21-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:12:19-67
-22            <intent-filter>
-22-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:13:13-17:29
-23                <action android:name="android.intent.action.MAIN" />
-23-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:14:17-69
-23-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:14:25-66
-24
-25                <category android:name="android.intent.category.LAUNCHER" />
-25-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:16:17-77
-25-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:16:27-74
-26            </intent-filter>
-27        </activity>
-28
-29        <service
-29-->[androidx.room:room-runtime:2.2.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\854b47ac59f20b6a0c922bde7b1e0434\room-runtime-2.2.1\AndroidManifest.xml:25:9-27:40
-30            android:name="androidx.room.MultiInstanceInvalidationService"
-30-->[androidx.room:room-runtime:2.2.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\854b47ac59f20b6a0c922bde7b1e0434\room-runtime-2.2.1\AndroidManifest.xml:26:13-74
-31            android:exported="false" />
-31-->[androidx.room:room-runtime:2.2.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\854b47ac59f20b6a0c922bde7b1e0434\room-runtime-2.2.1\AndroidManifest.xml:27:13-37
-32
-33        <provider
-33-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:23:9-27:43
-34            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-34-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:24:13-79
-35            android:authorities="com.example.inspirationboard.lifecycle-process"
-35-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:25:13-69
-36            android:exported="false"
-36-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:26:13-37
-37            android:multiprocess="true" />
-37-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:27:13-40
-38    </application>
-39
-40</manifest>
+11    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+11-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:6:5-80
+11-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:6:22-78
+12
+13    <application
+13-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:8:5-34:19
+14        android:allowBackup="true"
+14-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:9:9-35
+15        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+15-->[androidx.core:core:1.0.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\72b2b92ec4ab73ff21fb9bc348de3b22\core-1.0.1\AndroidManifest.xml:22:18-86
+16        android:debuggable="true"
+17        android:icon="@drawable/icons8_cat_butt_96"
+17-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:10:9-52
+18        android:label="@string/app_name"
+18-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:11:9-41
+19        android:roundIcon="@drawable/icons8_cat_butt_96"
+19-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:12:9-57
+20        android:supportsRtl="true"
+20-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:13:9-35
+21        android:testOnly="true"
+22        android:theme="@style/AppTheme" >
+22-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:14:9-40
+23        <activity android:name="com.example.PetBoard.MainActivity" >
+23-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:15:9-21:20
+23-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:15:19-67
+24            <intent-filter>
+24-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:16:13-20:29
+25                <action android:name="android.intent.action.MAIN" />
+25-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:17:17-69
+25-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:17:25-66
+26
+27                <category android:name="android.intent.category.LAUNCHER" />
+27-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:19:17-77
+27-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:19:27-74
+28            </intent-filter>
+29        </activity>
+30
+31        <provider
+31-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:23:9-33:20
+32            android:name="androidx.core.content.FileProvider"
+32-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:24:13-62
+33            android:authorities="com.example.PetBoard.fileprovider"
+33-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:25:13-68
+34            android:exported="false"
+34-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:26:13-37
+35            android:grantUriPermissions="true" >
+35-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:27:13-47
+36            <meta-data
+36-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:29:13-32:51
+37                android:name="android.support.FILE_PROVIDER_PATHS"
+37-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:30:17-67
+38                android:resource="@xml/filepaths" />
+38-->C:\Users\Sen\AndroidStudioProjects\InspirationBoard\app\src\main\AndroidManifest.xml:31:17-50
+39        </provider>
+40        <provider
+40-->[com.squareup.picasso:picasso:2.71828] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\822366ebece4bc50a2c7ab6f0701b65c\jetified-picasso-2.71828\AndroidManifest.xml:8:9-11:40
+41            android:name="com.squareup.picasso.PicassoProvider"
+41-->[com.squareup.picasso:picasso:2.71828] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\822366ebece4bc50a2c7ab6f0701b65c\jetified-picasso-2.71828\AndroidManifest.xml:9:13-64
+42            android:authorities="com.example.inspirationboard.com.squareup.picasso"
+42-->[com.squareup.picasso:picasso:2.71828] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\822366ebece4bc50a2c7ab6f0701b65c\jetified-picasso-2.71828\AndroidManifest.xml:10:13-72
+43            android:exported="false" />
+43-->[com.squareup.picasso:picasso:2.71828] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\822366ebece4bc50a2c7ab6f0701b65c\jetified-picasso-2.71828\AndroidManifest.xml:11:13-37
+44
+45        <service
+45-->[androidx.room:room-runtime:2.2.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\854b47ac59f20b6a0c922bde7b1e0434\room-runtime-2.2.1\AndroidManifest.xml:25:9-27:40
+46            android:name="androidx.room.MultiInstanceInvalidationService"
+46-->[androidx.room:room-runtime:2.2.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\854b47ac59f20b6a0c922bde7b1e0434\room-runtime-2.2.1\AndroidManifest.xml:26:13-74
+47            android:exported="false" />
+47-->[androidx.room:room-runtime:2.2.1] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\854b47ac59f20b6a0c922bde7b1e0434\room-runtime-2.2.1\AndroidManifest.xml:27:13-37
+48
+49        <provider
+49-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:23:9-27:43
+50            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+50-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:24:13-79
+51            android:authorities="com.example.inspirationboard.lifecycle-process"
+51-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:25:13-69
+52            android:exported="false"
+52-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:26:13-37
+53            android:multiprocess="true" />
+53-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Sen\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:27:13-40
+54    </application>
+55
+56</manifest>

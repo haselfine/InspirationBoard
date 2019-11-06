@@ -22,6 +22,7 @@ import android.widget.EditText;
 
 import com.example.PetBoard.db.Pet;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class PetListFragment extends Fragment implements PetListListener{
     private List<Pet> mPets;
 
     private static final String TAG = "WISH_LIST_FRAGMENT";
+
+    private List<Pet> petSearch = new ArrayList<>();
 
     private PetListAdapter petListAdapter;
 
@@ -93,6 +96,8 @@ public class PetListFragment extends Fragment implements PetListListener{
         petListAdapter.setPets(mPets);
         recyclerView.setAdapter(petListAdapter);
 
+
+
         mSearchBar = view.findViewById(R.id.search_EditText);
         mSearchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -107,12 +112,13 @@ public class PetListFragment extends Fragment implements PetListListener{
 
             @Override
             public void afterTextChanged(Editable s) {
-                
+
             }
         });
 
         return view;
     }
+
 
     @Override
     public void onAttach(@NonNull Context context){
@@ -170,11 +176,10 @@ public class PetListFragment extends Fragment implements PetListListener{
         if(mPets.contains(pet)){
             int petIndex = mPets.indexOf(pet);
             mPets.remove(pet);
-            mPetViewModel.delete(pet);
+            mPetViewModel.update(pet);
             petListAdapter.notifyItemRemoved(petIndex);
 
             mPets.add(pet);
-            mPetViewModel.insert(pet);
             petListAdapter.notifyItemInserted(mPets.size()-1);
         } else {
             mPets.add(pet);

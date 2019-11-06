@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InspirationBoard</string>
+    <string name="app_name">PetBoard</string>
     <string name="search_by_tag">Search by tag</string>
     <string name="add_pet">Add Pet</string>
     <string name="edit_pet">Edit Pet</string>

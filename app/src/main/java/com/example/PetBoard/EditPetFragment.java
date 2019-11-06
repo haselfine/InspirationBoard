@@ -17,7 +17,10 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.PetBoard.db.Pet;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.Date;
 
 
@@ -25,6 +28,7 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
 
     interface SaveChangesListener{
         void saveChanges(Pet pet);
+        void takePicture(View button);
     }
 
     private static final String TAG = "EDIT FRAGMENT";
@@ -92,6 +96,12 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
         mEditTags = view.findViewById(R.id.tags_editText);
         mEditRatingBar = view.findViewById(R.id.pet_edit_ratingBar);
         mEditPetImage = view.findViewById(R.id.pet_imageButton);
+        mEditPetImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSaveChangesListener.takePicture(mEditPetImage);
+            }
+        });
 
         mSaveButton = view.findViewById(R.id.save_button);
         mSaveButton.setOnClickListener(this);
@@ -130,7 +140,36 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
         mEditDescription.setText(pet.getDescription());
         mEditTags.setText(pet.getTags());
         mEditRatingBar.setRating(pet.getRating().floatValue());
+        loadImage();
     }
 
+    public void setImageFilePath(String filePath){
+        mPet.setPhotoPath(filePath);
+        loadImage();
+    }
+
+    public void loadImage() {
+
+        ImageButton imageButton = mEditPetImage; //use index of image button
+        String path = mPet.getPhotoPath(); //retrieve index of image button to find file
+
+        if (path != null && !path.isEmpty()){ //check if empty
+            Picasso.get() //use picasso to load file into image button
+                    .load(new File(path))
+                    .error(android.R.drawable.stat_notify_error)
+                    .fit()
+                    .centerCrop()
+                    .into(imageButton, new Callback(){
+                        @Override
+                        public void onSuccess(){
+                            Log.d(TAG, "Image loaded");
+                        }
+                        @Override
+                        public void onError(Exception e){
+                            Log.e(TAG, "error loading image", e);
+                        }
+                    });
+        }
+    }
 
 }
