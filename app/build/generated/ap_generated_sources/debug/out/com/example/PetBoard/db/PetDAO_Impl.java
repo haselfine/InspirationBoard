@@ -16,6 +16,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -36,7 +37,7 @@ public final class PetDAO_Impl implements PetDAO {
     this.__insertionAdapterOfPet = new EntityInsertionAdapter<Pet>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `Pet` (`id`,`name`,`description`,`tags`,`rating`,`photoPath`) VALUES (nullif(?, 0),?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `Pet` (`id`,`name`,`description`,`tags`,`rating`,`photoPath`,`date`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
       }
 
       @Override
@@ -67,6 +68,9 @@ public final class PetDAO_Impl implements PetDAO {
         } else {
           stmt.bindString(6, value.getPhotoPath());
         }
+        final long _tmp;
+        _tmp = Converters.dateToTimestamp(value.getDate());
+        stmt.bindLong(7, _tmp);
       }
     };
     this.__deletionAdapterOfPet = new EntityDeletionOrUpdateAdapter<Pet>(__db) {
@@ -83,7 +87,7 @@ public final class PetDAO_Impl implements PetDAO {
     this.__updateAdapterOfPet = new EntityDeletionOrUpdateAdapter<Pet>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `Pet` SET `id` = ?,`name` = ?,`description` = ?,`tags` = ?,`rating` = ?,`photoPath` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `Pet` SET `id` = ?,`name` = ?,`description` = ?,`tags` = ?,`rating` = ?,`photoPath` = ?,`date` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -114,7 +118,10 @@ public final class PetDAO_Impl implements PetDAO {
         } else {
           stmt.bindString(6, value.getPhotoPath());
         }
-        stmt.bindLong(7, value.getId());
+        final long _tmp;
+        _tmp = Converters.dateToTimestamp(value.getDate());
+        stmt.bindLong(7, _tmp);
+        stmt.bindLong(8, value.getId());
       }
     };
     this.__preparedStmtOfDelete = new SharedSQLiteStatement(__db) {
@@ -217,6 +224,7 @@ public final class PetDAO_Impl implements PetDAO {
           final int _cursorIndexOfTags = CursorUtil.getColumnIndexOrThrow(_cursor, "tags");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfPhotoPath = CursorUtil.getColumnIndexOrThrow(_cursor, "photoPath");
+          final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
           final List<Pet> _result = new ArrayList<Pet>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final Pet _item;
@@ -243,6 +251,11 @@ public final class PetDAO_Impl implements PetDAO {
             final String _tmpPhotoPath;
             _tmpPhotoPath = _cursor.getString(_cursorIndexOfPhotoPath);
             _item.setPhotoPath(_tmpPhotoPath);
+            final Date _tmpDate;
+            final long _tmp;
+            _tmp = _cursor.getLong(_cursorIndexOfDate);
+            _tmpDate = Converters.dateFromTimestamp(_tmp);
+            _item.setDate(_tmpDate);
             _result.add(_item);
           }
           return _result;
@@ -279,6 +292,7 @@ public final class PetDAO_Impl implements PetDAO {
           final int _cursorIndexOfTags = CursorUtil.getColumnIndexOrThrow(_cursor, "tags");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfPhotoPath = CursorUtil.getColumnIndexOrThrow(_cursor, "photoPath");
+          final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
           final List<Pet> _result = new ArrayList<Pet>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final Pet _item;
@@ -305,6 +319,11 @@ public final class PetDAO_Impl implements PetDAO {
             final String _tmpPhotoPath;
             _tmpPhotoPath = _cursor.getString(_cursorIndexOfPhotoPath);
             _item.setPhotoPath(_tmpPhotoPath);
+            final Date _tmpDate;
+            final long _tmp;
+            _tmp = _cursor.getLong(_cursorIndexOfDate);
+            _tmpDate = Converters.dateFromTimestamp(_tmp);
+            _item.setDate(_tmpDate);
             _result.add(_item);
           }
           return _result;

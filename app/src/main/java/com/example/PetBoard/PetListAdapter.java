@@ -69,6 +69,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListV
         TextView tagTextView;
         ImageView petImageView;
         String photoPath;
+        TextView dateTextView;
 
         PetListListener listener;
 
@@ -78,6 +79,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListV
             nameTextView = itemView.findViewById(R.id.name_textView);
             tagTextView = itemView.findViewById(R.id.tags_textView);
             petImageView = itemView.findViewById(R.id.pet_imageView);
+            dateTextView = itemView.findViewById(R.id.date_textView);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -102,6 +104,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListV
             } else {
                 nameTextView.setText(pet.getName());
                 tagTextView.setText(pet.getTags());
+                dateTextView.setText(pet.getDate().toString());
                 photoPath = pet.getPhotoPath();
             }
         }

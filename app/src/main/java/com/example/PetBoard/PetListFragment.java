@@ -107,7 +107,7 @@ public class PetListFragment extends Fragment implements PetListListener{
 
             @Override
             public void afterTextChanged(Editable s) {
-                mPetViewModel.getPetByTag(s);
+                
             }
         });
 

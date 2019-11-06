@@ -30,7 +30,9 @@ public class PetViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Pet>> getPetByTag(CharSequence s){
-        mTags = s.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("%").append(s.toString()).append("%");
+        mTags = sb.toString();
         return mTaggedPets;
     }
 

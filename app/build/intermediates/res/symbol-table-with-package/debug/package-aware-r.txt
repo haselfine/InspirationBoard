@@ -723,6 +723,7 @@ id content
 id contentPanel
 id custom
 id customPanel
+id date_textView
 id decor_content_parent
 id default_activity_button
 id delete_button
@@ -798,7 +799,7 @@ id screen
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
-id searchEditText
+id search_EditText
 id search_badge
 id search_bar
 id search_button
