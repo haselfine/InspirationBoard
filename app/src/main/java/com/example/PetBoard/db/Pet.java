@@ -1,12 +1,18 @@
 package com.example.PetBoard.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.util.Date;
 
 @Entity
-public class Pet implements Comparable<Pet>{
+public class Pet implements Comparable<Pet>, Parcelable {
 
 
     @NonNull
@@ -17,6 +23,7 @@ public class Pet implements Comparable<Pet>{
     private String tags;
     private Double rating;
     private String photoPath;
+    private Date date;
 
     public Pet(){}
 
@@ -78,9 +85,50 @@ public class Pet implements Comparable<Pet>{
         this.photoPath = photoPath;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int describeContents(){
+        return 0;
+    }
+
+    protected Pet(Parcel in){
+        name = in.readString();
+        description = in.readString();
+        tags = in.readString();
+        rating = in.readDouble();
+        photoPath = in.readString();
+    }
+
+    public static final Creator<Pet> CREATOR = new Creator<Pet>() {
+        @Override
+        public Pet createFromParcel(Parcel in) {
+            return new Pet(in);
+        }
+
+        @Override
+        public Pet[] newArray(int size) {
+            return new Pet[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags){
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(tags);
+        dest.writeDouble(rating);
+        dest.writeString(photoPath);
+
+    }
 
     public int compareTo(Pet pet){
-        return this.name.toLowerCase().compareTo(pet.getName().toLowerCase());
+        return this.date.compareTo(pet.date);
     }
 
     @Override
@@ -92,6 +140,9 @@ public class Pet implements Comparable<Pet>{
                 ", tags=" + tags +
                 ", rating=" + rating +
                 ", photoPath=" + photoPath +
+                ", date=" + date +
                 '}';
     }
+
+
 }

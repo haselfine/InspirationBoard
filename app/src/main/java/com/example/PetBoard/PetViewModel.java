@@ -13,17 +13,25 @@ import java.util.List;
 
 public class PetViewModel extends AndroidViewModel {
 
+    private String mTags;
     private PetRepository mPetRepository;
     private LiveData<List<Pet>> mAllPets;
+    private LiveData<List<Pet>> mTaggedPets;
 
     public PetViewModel(@NonNull Application application){
         super(application);
         mPetRepository = new PetRepository(application);
         mAllPets = mPetRepository.getAllPets();
+        mTaggedPets = mPetRepository.getPetByTag(mTags);
     }
 
     public LiveData<List<Pet>> getAllPets(){
         return mAllPets;
+    }
+
+    public LiveData<List<Pet>> getPetByTag(CharSequence s){
+        mTags = s.toString();
+        return mTaggedPets;
     }
 
     public void insert(Pet pet){

@@ -5,7 +5,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.PetBoard.db.Pet;
 
@@ -14,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements
         ButtonFragment.ButtonClickedListener,
         EditPetFragment.SaveChangesListener{
 
+
+    Pet mPet;
 
     private static final String TAG = "MAIN_ACTIVITY";
 
@@ -35,12 +39,11 @@ public class MainActivity extends AppCompatActivity implements
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        ft.add(R.id.pet_detail_container, petDetailFragment, TAG_DETAIL);
         ft.add(R.id.pet_list_container, petListFragment, TAG_LIST);
+        ft.add(R.id.pet_detail_container, petDetailFragment, TAG_DETAIL);
         ft.add(R.id.button_container, buttonFragment, TAG_BUTTON);
 
         ft.commit();
-
     }
 
     @Override
@@ -53,7 +56,14 @@ public class MainActivity extends AppCompatActivity implements
                 callEditFragment(edit);
                 break;
             case R.id.delete_button:
-                //TODO add delete functionality
+                petToDelete(mPet);
+
+                FragmentManager fm = getSupportFragmentManager();
+                PetDetailFragment detailFragment = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
+                mPet = detailFragment.defaultPet();
+                detailFragment.setPet(mPet);
+
+                break;
             case R.id.edit_button:
                 edit = true;
                 callEditFragment(edit);
@@ -61,31 +71,58 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    public void petToDelete(Pet pet){
+        FragmentManager fm = getSupportFragmentManager();
+        PetListFragment petListFragment = (PetListFragment) fm.findFragmentByTag(TAG_LIST);
+        try{
+            petListFragment.deletePet(pet);
+        } catch (NullPointerException npe){
+            Toast.makeText(this, "Pet does not exist", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void callEditFragment(boolean edit) {
-        EditPetFragment editPetFragment = EditPetFragment.newInstance(edit);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-
-        ft.replace(android.R.id.content, editPetFragment,TAG_EDIT);
+        try {
+            PetDetailFragment detail = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
+            mPet = detail.getCurrentPet();
+        } catch (NullPointerException npe){
+            Log.d(TAG, "No current pet.");
+        }
+        if(edit){
+            EditPetFragment editPetFragment = EditPetFragment.newInstance(mPet);
+            ft.replace(android.R.id.content, editPetFragment,TAG_EDIT);
+        } else {
+            EditPetFragment editPetFragment = EditPetFragment.newInstance();
+            ft.replace(android.R.id.content, editPetFragment,TAG_EDIT);
+        }
 
         ft.addToBackStack(TAG_EDIT);
 
         ft.commit();
     }
 
+
+
     @Override
     public void petClicked (Pet pet){
-        FragmentManager fm = getSupportFragmentManager();
-        PetDetailFragment detailFragment = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
-        detailFragment.setPet(pet);
+        try {
+            FragmentManager fm = getSupportFragmentManager();
+            PetDetailFragment detailFragment = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
+            mPet = pet;
+            detailFragment.setPet(mPet);
+        } catch (NullPointerException npe){
+            mPet = pet;
+        }
     }
 
     @Override
-    public void saveChanges(Pet pet, boolean edit){
+    public void saveChanges(Pet pet){
         FragmentManager fm = getSupportFragmentManager();
         PetListFragment petListFragment = (PetListFragment) fm.findFragmentByTag(TAG_LIST);
-        petListFragment.updateList(pet, edit);
+        petListFragment.updateList(pet);
 
         FragmentTransaction ft = fm.beginTransaction();
         EditPetFragment editPetFragment = (EditPetFragment) fm.findFragmentByTag(TAG_EDIT);

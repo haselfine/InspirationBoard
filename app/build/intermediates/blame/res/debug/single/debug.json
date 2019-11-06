@@ -1628,6 +1628,10 @@
         "source": "C:\\Users\\Sen\\.gradle\\caches\\transforms-2\\files-2.1\\f6a183f8595ca34f3d5cc99d1f8bc322\\appcompat-1.0.2\\res\\drawable-xxhdpi-v4\\abc_menu_hardkey_panel_mtrl_mult.9.png"
     },
     {
+        "merged": "C:\\Users\\Sen\\AndroidStudioProjects\\InspirationBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icons8_drop_down_64.png.flat",
+        "source": "C:\\Users\\Sen\\AndroidStudioProjects\\InspirationBoard\\app\\src\\main\\res\\drawable\\icons8_drop_down_64.png"
+    },
+    {
         "merged": "C:\\Users\\Sen\\AndroidStudioProjects\\InspirationBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_launcher_background.png.flat",
         "source": "C:\\Users\\Sen\\AndroidStudioProjects\\InspirationBoard\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_launcher_background.png"
     }

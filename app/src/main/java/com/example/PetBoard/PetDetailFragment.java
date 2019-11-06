@@ -51,6 +51,8 @@ public class PetDetailFragment extends Fragment {
 
         mPetViewModel = ViewModelProviders.of(this).get(PetViewModel.class);
 
+        mPet = defaultPet();
+
         final Observer<List<Pet>> petListObserver = new Observer<List<Pet>>() {
             @Override
             public void onChanged(List<Pet> pets) {
@@ -60,11 +62,7 @@ public class PetDetailFragment extends Fragment {
                     mPet = mPets.get(0);
                     setAttributes(mPet);
                 } else {
-                    mPet = new Pet();
-                    mPet.setName("Fluffy");
-                    mPet.setDescription("Very fluffy");
-                    mPet.setRating(3.0);
-                    mPet.setTags("cat, siberian");
+                    mPet = defaultPet();
                 }
             }
         };
@@ -93,14 +91,19 @@ public class PetDetailFragment extends Fragment {
         mImage = view.findViewById(R.id.pet_imageButton);
 
         if(mPet == null){
-            mPet = new Pet();
-            mPet.setName("Fluffy");
-            mPet.setDescription("Very fluffy");
-            mPet.setRating(3.0);
-            mPet.setTags("cat, siberian");
+            mPet = defaultPet();
         }
-
+        setPet(mPet);
         return view;
+    }
+
+    public Pet defaultPet(){
+        Pet pet = new Pet();
+        pet.setName("Fluffy");
+        pet.setDescription("Very fluffy");
+        pet.setRating(3.0);
+        pet.setTags("cat, siberian");
+        return pet;
     }
 
     public void setPet(Pet pet){
@@ -109,10 +112,16 @@ public class PetDetailFragment extends Fragment {
     }
 
     public void setAttributes(Pet pet) {
+        if(pet == null){
+            pet = defaultPet();
+        }
         mName.setText(getString(R.string.pet_name,  pet.getName()));
         mDescription.setText(getString(R.string.pet_description, pet.getDescription()));
         mTags.setText(getString(R.string.pet_tags, pet.getTags()));
         mRating.setRating(pet.getRating().floatValue());
     }
 
+    public Pet getCurrentPet(){
+        return mPet;
+    }
 }

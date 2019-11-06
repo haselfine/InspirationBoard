@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/pet_imageView"
-        android:layout_width="94dp"
-        android:layout_height="93dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/tags_textView"
-        android:layout_width="66dp"
+        android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginTop="4dp"
         android:text="TextView"
@@ -41,4 +41,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_textView" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="78dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/pet_imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

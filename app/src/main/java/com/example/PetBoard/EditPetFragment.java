@@ -18,11 +18,13 @@ import android.widget.Toast;
 
 import com.example.PetBoard.db.Pet;
 
+import java.util.Date;
+
 
 public class EditPetFragment extends Fragment implements View.OnClickListener {
 
     interface SaveChangesListener{
-        void saveChanges(Pet pet, boolean add);
+        void saveChanges(Pet pet);
     }
 
     private static final String TAG = "EDIT FRAGMENT";
@@ -38,20 +40,30 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
 
     Pet mPet;
 
-    boolean mEdit;
-
     Button mSaveButton;
 
     public EditPetFragment() {
         // Required empty public constructor
     }
 
-    public static EditPetFragment newInstance(boolean edit){
+    public static EditPetFragment newInstance(){
+        EditPetFragment editPetFragment = new EditPetFragment();
+        return editPetFragment;
+    }
+
+    public static EditPetFragment newInstance(Pet pet){
         final Bundle args = new Bundle();
-        args.putBoolean(ARGS_EDIT, edit);
+        args.putParcelable(ARGS_EDIT, pet);
         EditPetFragment editPetFragment = new EditPetFragment();
         editPetFragment.setArguments(args);
         return editPetFragment;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+
     }
 
 
@@ -84,9 +96,14 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
         mSaveButton = view.findViewById(R.id.save_button);
         mSaveButton.setOnClickListener(this);
 
-        if(mEdit){
+        if(getArguments() != null && getArguments().getParcelable(ARGS_EDIT)!=null){ //as long as arguments/bundle have information...
+
+            mPet = getArguments().getParcelable(ARGS_EDIT);
+
             setCurrentAttributes(mPet);
+
         } else {
+            Log.d(TAG, "Did not receive pet.");
             mPet = new Pet();
         }
 
@@ -103,7 +120,9 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
         mPet.setDescription(mEditDescription.getText().toString());
         mPet.setTags(mEditTags.getText().toString());
         mPet.setRating(Double.valueOf(mEditRatingBar.getRating()));
-        mSaveChangesListener.saveChanges(mPet, mEdit);
+        Date date = new Date();
+        mPet.setDate(date);
+        mSaveChangesListener.saveChanges(mPet);
     }
 
     private void setCurrentAttributes(Pet pet) {

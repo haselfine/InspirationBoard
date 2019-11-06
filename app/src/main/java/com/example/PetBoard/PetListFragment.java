@@ -12,10 +12,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.PetBoard.db.Pet;
 
@@ -32,6 +35,8 @@ public class PetListFragment extends Fragment implements PetListListener{
     }
 
     private PetClickedListener mPetClickedListener;
+
+    private EditText mSearchBar;
 
     private PetViewModel mPetViewModel;
     private List<Pet> mPets;
@@ -53,6 +58,10 @@ public class PetListFragment extends Fragment implements PetListListener{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        displayResults();
+    }
+
+    private void displayResults() {
         final PetViewModel petViewModel = ViewModelProviders.of(this).get(PetViewModel.class);
 
         final Observer<List<Pet>> petListObserver = new Observer<List<Pet>>() {
@@ -75,12 +84,32 @@ public class PetListFragment extends Fragment implements PetListListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pet_list, container, false);
 
+
+
         RecyclerView recyclerView = view.findViewById(R.id.pet_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
         petListAdapter = new PetListAdapter(this.getContext(), this);
         petListAdapter.setPets(mPets);
         recyclerView.setAdapter(petListAdapter);
+
+        mSearchBar = view.findViewById(R.id.search_EditText);
+        mSearchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPetViewModel.getPetByTag(s);
+            }
+        });
 
         return view;
     }
@@ -117,14 +146,19 @@ public class PetListFragment extends Fragment implements PetListListener{
         if(getActivity() == null){
             return;
         }
+        deletePet(pet);
+    }
+
+    public void deletePet(final Pet pet){
+
         AlertDialog confirmDeleteDialog = new AlertDialog.Builder(getActivity())
-                .setMessage(getString(R.string.delete_pet_message, mPets.get(position).getName()))
+                .setMessage(getString(R.string.delete_pet_message, pet.getName()))
                 .setTitle(R.string.delete_pet)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mPetViewModel.delete(pet);
-                        petListAdapter.notifyItemRemoved(position);
+                        petListAdapter.notifyItemRemoved(mPets.indexOf(pet));
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -132,12 +166,16 @@ public class PetListFragment extends Fragment implements PetListListener{
         confirmDeleteDialog.show();
     }
 
-    public void updateList(Pet pet, boolean edit) {
-        if(edit){
+    public void updateList(Pet pet) {
+        if(mPets.contains(pet)){
             int petIndex = mPets.indexOf(pet);
             mPets.remove(pet);
             mPetViewModel.delete(pet);
             petListAdapter.notifyItemRemoved(petIndex);
+
+            mPets.add(pet);
+            mPetViewModel.insert(pet);
+            petListAdapter.notifyItemInserted(mPets.size()-1);
         } else {
             mPets.add(pet);
             mPetViewModel.insert(pet);
