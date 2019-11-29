@@ -27,7 +27,7 @@ import java.util.Date;
 public class EditPetFragment extends Fragment implements View.OnClickListener {
 
     interface SaveChangesListener{
-        void saveChanges(Pet pet); //saves edit/added pet. sends to main, which sends to the list fragment
+        void saveChanges(Pet pet, Boolean edited); //saves edit/added pet. sends to main, which sends to the list fragment
         void takePicture(View button); //this sends to main which handles the picture taking process
     }
 
@@ -43,7 +43,7 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
     RatingBar mEditRatingBar;
 
     Pet mPet;
-
+    Boolean isEditing;
     Button mSaveButton;
 
     public EditPetFragment() {
@@ -91,6 +91,8 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_edit_pet, container, false);
 
+        isEditing = false;
+
         mEditName = view.findViewById(R.id.name_editText);
         mEditDescription = view.findViewById(R.id.description_editText);
         mEditTags = view.findViewById(R.id.tags_editText);
@@ -108,12 +110,14 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
 
         if(getArguments() != null && getArguments().getParcelable(ARGS_EDIT)!=null){ //as long as arguments/bundle have information...
 
+            isEditing = true;
             mPet = getArguments().getParcelable(ARGS_EDIT);
 
             setCurrentAttributes(mPet);
 
         } else {
             Log.d(TAG, "Did not receive pet.");
+            isEditing = false;
             mPet = new Pet();
         }
 
@@ -133,7 +137,7 @@ public class EditPetFragment extends Fragment implements View.OnClickListener {
                                                                 //the original data type I had and I didn't want to do another migration
         Date date = new Date(); //gets current date/time
         mPet.setDate(date); //sets to variable
-        mSaveChangesListener.saveChanges(mPet); //sends info to main to send to list to save to list and database
+        mSaveChangesListener.saveChanges(mPet, isEditing); //sends info to main to send to list to save to list and database
     }
 
     private void setCurrentAttributes(Pet pet) {

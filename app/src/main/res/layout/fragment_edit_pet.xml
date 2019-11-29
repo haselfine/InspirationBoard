@@ -5,40 +5,37 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pet_list_background"
+    android:background="@color/colorButtons"
     tools:context=".EditPetFragment">
 
     <RatingBar
         android:id="@+id/pet_edit_ratingBar"
         android:layout_width="241dp"
         android:layout_height="48dp"
-        android:layout_marginTop="352dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tags_detail_textView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tags_editText"
+        app:layout_constraintTop_toTopOf="@+id/tags_editText" />
 
     <ImageButton
         android:id="@+id/pet_imageButton"
         android:layout_width="197dp"
         android:layout_height="166dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
         android:src="@android:drawable/ic_menu_camera"
+        app:layout_constraintBottom_toBottomOf="@+id/name_editText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/name_editText"
+        app:layout_constraintTop_toTopOf="@+id/name_editText" />
 
     <EditText
         android:id="@+id/name_editText"
         android:layout_width="128dp"
         android:layout_height="43dp"
-        android:layout_marginTop="89dp"
         android:ems="10"
         android:hint="@string/name_hint"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/description_editText"
         app:layout_constraintEnd_toStartOf="@+id/pet_imageButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,74 +44,75 @@
     <EditText
         android:id="@+id/description_editText"
         android:layout_width="355dp"
-        android:layout_height="104dp"
-        android:layout_marginTop="222dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/description_hint"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/tags_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/name_editText" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/edit_name_label"
-        app:layout_constraintStart_toStartOf="@+id/name_editText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/name_editText"
+        app:layout_constraintStart_toStartOf="@+id/name_editText" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="187dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/edit_description_label"
-        app:layout_constraintStart_toStartOf="@+id/description_editText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/description_editText"
+        app:layout_constraintStart_toStartOf="@+id/description_editText" />
 
     <EditText
         android:id="@+id/tags_editText"
         android:layout_width="106dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="355dp"
         android:ems="10"
         android:hint="@string/tags_hint"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/save_button"
+        app:layout_constraintEnd_toStartOf="@+id/pet_edit_ratingBar"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/description_editText" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="331dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/edit_tags_label"
-        app:layout_constraintStart_toStartOf="@+id/tags_editText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/tags_editText"
+        app:layout_constraintEnd_toEndOf="@+id/tags_editText"
+        app:layout_constraintStart_toStartOf="@+id/tags_editText" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/edit_rating_label"
-        app:layout_constraintStart_toStartOf="@+id/pet_edit_ratingBar"
-        tools:layout_editor_absoluteY="331dp" />
+        app:layout_constraintBottom_toTopOf="@+id/pet_edit_ratingBar"
+        app:layout_constraintEnd_toEndOf="@+id/pet_edit_ratingBar"
+        app:layout_constraintStart_toStartOf="@+id/pet_edit_ratingBar" />
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="470dp"
         android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tags_editText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

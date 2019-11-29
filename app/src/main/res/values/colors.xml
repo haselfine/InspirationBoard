@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#916E33</color>
-    <color name="colorPrimaryDark">#756441</color>
-    <color name="colorAccent">#76C18C</color>
-    <color name="pet_list_background">#997F50</color>
-    <color name="pet_list_item_background">#DFC8FF00</color>
-    <color name="pet_detail_background">#A1C7AD78</color>
+    <color name="colorPrimary">#AA9260</color>
+    <color name="colorButtons">#998356</color>
+    <color name="colorAccent">#DAD084</color>
+    <color name="pet_detail_background">#AA9260</color>
+    <color name="pet_list_item_background">#DF95CFB8</color>
+    <color name="pet_list_background">#A1F5E094</color>
+    <color name="magnifier">#9AAF83</color>
 
 </resources>

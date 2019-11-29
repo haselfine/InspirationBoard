@@ -32,7 +32,7 @@ import java.util.List;
 public class PetDetailFragment extends Fragment implements View.OnClickListener {
 
     interface ExpandButtonListener{
-        void expand(Pet pet);
+        void expand();
     }
 
     private ExpandButtonListener mExpandButtonListener;
@@ -70,11 +70,11 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
                 Collections.sort(pets);
                 PetDetailFragment.this.mPets = pets;
                 if(mPets.size() > 0){ //checks to make sure list isn't empty
-                    mPet = mPets.get(0); //gets first pet in list
-                    setAttributes(mPet);
+                    Pet pet = mPets.get(0); //gets first pet in list
+                    setAttributes(pet);
                 } else {
-                    mPet = defaultPet(); //if list is empty, sets to default pet
-                    setAttributes(mPet);
+                    Pet pet = defaultPet(); //if list is empty, sets to default pet
+                    setAttributes(pet);
                 }
             }
         };
@@ -110,29 +110,32 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
         mExpandButton = view.findViewById(R.id.expand_button);
         mExpandButton.setOnClickListener(this); //click listener is below
 
-        if(mPet == null){
-            mPet = defaultPet(); //if there's no pet, sets to default pet (this might be redundant)
+        if(mPets == null){
+            final Pet pet = defaultPet();
+            setPet(pet);//if there's no pet, sets to default pet (this might be redundant)
+        } else {
+            setPet(mPets.get(0));
         }
-        setPet(mPet);
         return view;
     }
     @Override
     public void onClick(View v) {
-        mExpandButtonListener.expand(mPet); //sends information to expanded details fragment
+
+        mExpandButtonListener.expand(); //sends information to expanded details fragment
     }
 
     public Pet defaultPet(){ //default schema for a pet
         Pet pet = new Pet();
-        pet.setName("Fluffy");
-        pet.setDescription("Very fluffy");
-        pet.setRating(3.0);
-        pet.setTags("cat, siberian");
+        pet.setName("Add a pet!");
+        pet.setDescription("");
+        pet.setRating(0.0);
+        pet.setTags("");
         return pet;
     }
 
     public void setPet(Pet pet){
-        this.mPet = pet; //just in case this is sent from outside of this fragment
-        setAttributes(mPet);
+         //just in case this is sent from outside of this fragment
+        setAttributes(pet);
     }
 
     public void setAttributes(Pet pet) { //loads information from pet object into fields
@@ -142,26 +145,43 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
         mName.setText(getString(R.string.pet_name,  pet.getName()));
         mDescription.setText(getString(R.string.pet_description, pet.getDescription()));
         mTags.setText(getString(R.string.pet_tags, pet.getTags()));
+        setSizes(pet);
+
+
         if(pet.getPhotoPath() == null){ //if there's no photopath, sets picture to default
             mImage.setImageResource(android.R.drawable.ic_menu_camera);
         } else {
-            loadImage();
+            loadImage(pet);
         }
         mRating.setRating(pet.getRating().floatValue()); //needs float value method since I originally made the
                                                 // rating a double and didn't want to migrate to a new database
     }
 
-    public Pet getCurrentPet(){
-        if(mPet == null){ //if no pet, sets to default
-            mPet = defaultPet();
+    private void setSizes(Pet pet) {
+        int nameLength = pet.getName().length();
+        int descriptionLength = pet.getDescription().length();
+        if(nameLength > 11){
+            mName.setTextSize(18);
+            if (nameLength > 18){
+                String shorterName = mName.getText().toString().substring(0,24);
+                shorterName = shorterName + "...";
+                mName.setText(shorterName);
+            }
+        } else {
+            mName.setTextSize(24);
         }
-        return mPet; //otherwise returns currently selected pet
+
+        if(descriptionLength > 81){
+            String shorterDescription = mDescription.getText().toString().substring(0,84);
+            shorterDescription = shorterDescription + "...";
+            mDescription.setText(shorterDescription);
+        }
     }
 
-    public void loadImage() {
+    public void loadImage(Pet pet) {
 
         ImageButton imageButton = mImage; //use index of image button
-        String path = mPet.getPhotoPath(); //retrieve index of image button to find file
+        String path = pet.getPhotoPath(); //retrieve index of image button to find file
 
         if (path != null && !path.isEmpty()){ //check if empty
             Picasso.get() //use picasso to load file into image button

@@ -11,24 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/button_container"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="3"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <FrameLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/pet_detail_container"
-        app:layout_constraintTop_toBottomOf="@+id/pet_list_container"
-        app:layout_constraintVertical_weight="0.75"/>
+        app:layout_constraintTop_toBottomOf="@+id/pet_list_container"/>
 
     <FrameLayout
         android:id="@+id/pet_detail_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_container"
-        app:layout_constraintVertical_weight="3"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_container"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

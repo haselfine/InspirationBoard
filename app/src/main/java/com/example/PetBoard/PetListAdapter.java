@@ -104,11 +104,27 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListV
             Log.d(TAG, "binding pet " + pet);
             if(pet == null){
                 nameTextView.setText("");
+                dateTextView.setText("");
                 tagTextView.setText("");
+                petImageView.setVisibility(View.INVISIBLE);
             } else {
-                nameTextView.setText(pet.getName());
-                tagTextView.setText(pet.getTags());
+                if(pet.getName().length() > 12){
+                    String shorterName = pet.getName().substring(0,11);
+                    shorterName = shorterName + "...";
+                    nameTextView.setText(shorterName);
+                } else {
+                    nameTextView.setText(pet.getName());
+                }
+
+                if(pet.getTags().length() > 24){
+                    String shorterTags = pet.getTags().substring(0,23);
+                    shorterTags = shorterTags + "...";
+                    tagTextView.setText(shorterTags);
+                } else {
+                    tagTextView.setText(pet.getTags());
+                }
                 dateTextView.setText(pet.getDate().toString());
+                petImageView.setVisibility(View.VISIBLE);
                 photoPath = pet.getPhotoPath();
                 loadImage(pet);
             }
@@ -134,13 +150,10 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetListV
                                 Log.e(TAG, "error loading image", e);
                             }
                         });
+            } else {
+                imageView.setVisibility(View.INVISIBLE);
             }
         }
     }
 
-
-
-    public Pet getFirstPet(){
-        return mPets.get(0);
-    }
 }

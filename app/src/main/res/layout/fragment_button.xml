@@ -4,28 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:layout_height="wrap_content"
+    android:background="@color/colorButtons"
     tools:context=".ButtonFragment">
 
     <ImageButton
         android:id="@+id/add_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="7dp"
         android:contentDescription="add pet"
         android:scaleType="fitXY"
         android:src="@drawable/icons8_corgi_100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/edit_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/edit_button" />
 
     <ImageButton
         android:id="@+id/delete_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="7dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="6dp"
         android:contentDescription="delete pet"
         android:scaleType="fitXY"
         android:src="@drawable/icons8_rabbit_96"
@@ -38,12 +38,11 @@
         android:id="@+id/edit_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="7dp"
         android:contentDescription="edit pet"
         android:scaleType="fitCenter"
         android:src="@drawable/icons8_cat_butt_96"
         app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/delete_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/delete_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

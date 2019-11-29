@@ -5,22 +5,33 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pet_list_background"
+    android:background="@color/colorButtons"
     tools:context=".ExpandedFragment">
+
+    <TextView
+        android:id="@+id/expand_tags_detail_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pet_tags"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expand_pet_ratingBar" />
 
     <ImageButton
         android:id="@+id/expand_pet_imageButton"
         android:layout_width="339dp"
         android:layout_height="349dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:clickable="false"
         android:contentDescription="@string/pet_image"
         android:padding="16dp"
         android:src="@android:drawable/ic_menu_camera"
+        app:layout_constraintBottom_toTopOf="@+id/expand_pet_description_textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expand_name_detail_TextView" />
 
     <RatingBar
         android:id="@+id/expand_pet_ratingBar"
@@ -32,29 +43,19 @@
         android:longClickable="false"
         android:max="5"
         android:stepSize=".5"
+        app:layout_constraintBottom_toTopOf="@+id/expand_tags_detail_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/expand_tags_detail_textView"
-        app:layout_constraintTop_toTopOf="@+id/expand_tags_detail_textView" />
-
-    <TextView
-        android:id="@+id/expand_tags_detail_textView"
-        android:layout_width="106dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="636dp"
-        android:text="@string/pet_tags"
-        app:layout_constraintEnd_toStartOf="@+id/expand_pet_ratingBar"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/expand_pet_description_textView" />
 
     <TextView
         android:id="@+id/expand_name_detail_TextView"
-        android:layout_width="75dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/pet_name"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/expand_pet_imageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,13 +64,13 @@
     <TextView
         android:id="@+id/expand_pet_description_textView"
         android:layout_width="318dp"
-        android:layout_height="111dp"
-        android:layout_marginTop="492dp"
+        android:layout_height="wrap_content"
         android:text="@string/pet_description"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/expand_pet_ratingBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/expand_pet_imageButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
