@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.PetBoard.db.Pet;
@@ -86,6 +87,7 @@ public class PetListFragment extends Fragment implements PetListListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pet_list, container, false);
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
 
         RecyclerView recyclerView = view.findViewById(R.id.pet_list);

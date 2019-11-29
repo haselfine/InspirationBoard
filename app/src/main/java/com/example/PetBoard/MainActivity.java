@@ -155,10 +155,17 @@ public class MainActivity extends AppCompatActivity implements
     public void expand(){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        PetDetailFragment petDetailFragment = (PetDetailFragment) fm.findFragmentByTag(TAG_DETAIL);
+        if(clickedPet == null){
+            Pet pet = petDetailFragment.mPets.get(0);
+            ExpandedFragment expandedFragment = ExpandedFragment.newInstance(pet); //shows details for first pet in expanded fragment
+            ft.add(android.R.id.content, expandedFragment, TAG_EXPAND);
+        } else {
+            ExpandedFragment expandedFragment = ExpandedFragment.newInstance(clickedPet); //shows details for currently selected pet in expanded fragment
+            ft.add(android.R.id.content, expandedFragment, TAG_EXPAND);
+        }
 
-        ExpandedFragment expandedFragment = ExpandedFragment.newInstance(clickedPet); //shows details for that pet in expanded fragment
 
-        ft.add(android.R.id.content, expandedFragment, TAG_EXPAND);
 
         ft.addToBackStack(TAG_EXPAND);
 

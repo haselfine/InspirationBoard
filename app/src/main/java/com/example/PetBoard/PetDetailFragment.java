@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
     Pet mPet;
 
     private PetViewModel mPetViewModel;
-    private List<Pet> mPets;
+    public List<Pet> mPets;
 
     private static final String TAG = "PET_DETAIL_FRAGMENT";
 
@@ -101,7 +102,7 @@ public class PetDetailFragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pet_detail, container, false);
-        
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         mName = view.findViewById(R.id.name_detail_TextView);
         mDescription = view.findViewById(R.id.pet_description_textView);
         mTags = view.findViewById(R.id.tags_detail_textView);
